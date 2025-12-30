@@ -111,3 +111,46 @@ def repay_loan(request):
         form = RepaymentForm()
         
     return render(request, 'core/repay.html', {'form': form, 'loan': active_loan})
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Sum, Count
+
+@staff_member_required
+def admin_dashboard(request):
+    # Stats
+    total_users = Profile.objects.count()
+    active_loans_count = Loan.objects.filter(status='Active').count()
+    pending_loans_count = Loan.objects.filter(status='Pending').count()
+    total_repaid = Repayment.objects.aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    # Lists
+    pending_loans = Loan.objects.filter(status='Pending').order_by('-created_at')
+    recent_repayments = Repayment.objects.select_related('loan__borrower').order_by('-date')[:10]
+    
+    context = {
+        'total_users': total_users,
+        'active_loans_count': active_loans_count,
+        'pending_loans_count': pending_loans_count,
+        'total_repaid': total_repaid,
+        'pending_loans': pending_loans,
+        'recent_repayments': recent_repayments,
+    }
+    return render(request, 'core/admin_dashboard.html', context)
+
+@staff_member_required
+def approve_loan(request, pk):
+    loan = get_object_or_404(Loan, pk=pk)
+    if loan.status == 'Pending':
+        loan.status = 'Active'
+        loan.save()
+        messages.success(request, f"Loan {loan.id} approved.")
+    return redirect('admin_dashboard')
+
+@staff_member_required
+def reject_loan(request, pk):
+    loan = get_object_or_404(Loan, pk=pk)
+    if loan.status == 'Pending':
+        loan.status = 'Rejected'
+        loan.save()
+        messages.warning(request, f"Loan {loan.id} rejected.")
+    return redirect('admin_dashboard')

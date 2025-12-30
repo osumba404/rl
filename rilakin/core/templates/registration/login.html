@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm mt-5">
+            <div class="card-header bg-emerald text-white text-center">
+                <h4 class="mb-0">Login</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <script>
+                        var inputs = document.querySelectorAll('input, select, textarea');
+                        inputs.forEach(function(input) {
+                            input.classList.add('form-control');
+                        });
+                    </script>
+                    <button type="submit" class="btn btn-emerald w-100">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'register' %}">Don't have an account? Sign up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

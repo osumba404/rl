@@ -1,0 +1,113 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import UserRegisterForm, ProfileForm, LoanForm, RepaymentForm
+from .models import Loan, Profile
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}!')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'core/register.html', {'form': form})
+
+@login_required
+def dashboard(request):
+    # Ensure profile exists (handle cases where it might not)
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    active_loan = Loan.objects.filter(borrower=request.user, status='Active').first()
+    pending_loan = Loan.objects.filter(borrower=request.user, status='Pending').first()
+    
+    context = {
+        'profile': profile,
+        'active_loan': active_loan,
+        'pending_loan': pending_loan,
+    }
+    return render(request, 'core/dashboard.html', context)
+
+@login_required
+def verify_profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            prof = form.save(commit=False)
+            prof.verified_status = True  # Simulate auto-verification
+            prof.save()
+            messages.success(request, 'Profile verified successfully!')
+            return redirect('dashboard')
+    else:
+        form = ProfileForm(instance=profile)
+    
+    return render(request, 'core/verify.html', {'form': form})
+
+@login_required
+def apply_loan(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    if not profile.verified_status:
+        messages.warning(request, 'You must verify your profile first.')
+        return redirect('verify_profile')
+    
+    # prevent multiple active/pending loans
+    if Loan.objects.filter(borrower=request.user, status__in=['Active', 'Pending']).exists():
+         messages.info(request, 'You already have an active or pending loan.')
+         return redirect('dashboard')
+
+    if request.method == 'POST':
+        form = LoanForm(request.POST)
+        if form.is_valid():
+            loan = form.save(commit=False)
+            loan.borrower = request.user
+            
+            # Simple Logic
+            if loan.amount < 1000:
+                loan.status = 'Active'
+                messages.success(request, 'Loan auto-approved!')
+            else:
+                loan.status = 'Pending'
+                messages.info(request, 'Loan request submitted for review.')
+            
+            loan.save()
+            return redirect('dashboard')
+    else:
+        form = LoanForm()
+        
+    return render(request, 'core/apply.html', {'form': form})
+
+@login_required
+def repay_loan(request):
+    active_loan = Loan.objects.filter(borrower=request.user, status='Active').first()
+    
+    if not active_loan:
+        messages.info(request, 'No active loan to repay.')
+        return redirect('dashboard')
+        
+    if request.method == 'POST':
+        form = RepaymentForm(request.POST)
+        if form.is_valid():
+            repayment = form.save(commit=False)
+            repayment.loan = active_loan
+            repayment.save()
+            
+            # Check balance
+            if active_loan.balance <= 0:
+                active_loan.status = 'Paid'
+                active_loan.save()
+                messages.success(request, 'Loan fully paid! Congratulations.')
+            else:
+                messages.success(request, f'Repayment of {repayment.amount} accepted.')
+                
+            return redirect('dashboard')
+    else:
+        form = RepaymentForm()
+        
+    return render(request, 'core/repay.html', {'form': form, 'loan': active_loan})

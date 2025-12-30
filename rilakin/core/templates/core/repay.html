@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-emerald text-white">
+                <h4 class="mb-0">Repay Loan</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <p><strong>Total Balance:</strong> ${{ loan.balance }}</p>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <script>
+                        var inputs = document.querySelectorAll('input, select, textarea');
+                        inputs.forEach(function(input) {
+                            input.classList.add('form-control');
+                        });
+                    </script>
+                    <button type="submit" class="btn btn-emerald w-100">Make Payment</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-link w-100 mt-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

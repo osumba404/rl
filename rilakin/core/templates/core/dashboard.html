@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Profile Status</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <strong>Status:</strong> 
+                    {% if profile.verified_status %}
+                        <span class="badge bg-success">Verified</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Unverified</span>
+                    {% endif %}
+                </p>
+                <p><strong>Income:</strong> ${{ profile.monthly_income|default:"0.00" }}</p>
+                {% if not profile.verified_status %}
+                    <a href="{% url 'verify_profile' %}" class="btn btn-emerald btn-sm w-100">Verify Now</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Loan Status</h5>
+            </div>
+            <div class="card-body">
+                {% if active_loan %}
+                    <div class="alert alert-info">
+                        <h4>Active Loan</h4>
+                        <p><strong>Original Amount:</strong> ${{ active_loan.amount }}</p>
+                        <p><strong>Balance Due:</strong> <span class="text-danger fw-bold">${{ active_loan.balance }}</span></p>
+                        <p><strong>Due Date:</strong> {{ active_loan.due_date }}</p>
+                        <a href="{% url 'repay_loan' %}" class="btn btn-emerald">Repay Loan</a>
+                    </div>
+                {% elif pending_loan %}
+                     <div class="alert alert-warning">
+                        <h4>Loan Pending</h4>
+                        <p>Your loan request for ${{ pending_loan.amount }} is currently under review.</p>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="lead">You have no active loans.</p>
+                        {% if profile.verified_status %}
+                            <a href="{% url 'apply_loan' %}" class="btn btn-emerald btn-lg">Apply for Loan</a>
+                        {% else %}
+                            <p class="text-muted">Please verify your profile to apply for a loan.</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

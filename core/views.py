@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib import messages
 from .forms import UserRegisterForm, ProfileForm, LoanForm, RepaymentForm
@@ -16,6 +17,21 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'core/register.html', {'form': form})
+
+def register_admin(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Admin account created for {username}!')
+            return redirect('login')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'core/register_admin.html', {'form': form})
 
 @login_required
 def dashboard(request):
@@ -154,3 +170,30 @@ def reject_loan(request, pk):
         loan.save()
         messages.warning(request, f"Loan {loan.id} rejected.")
     return redirect('admin_dashboard')
+
+@staff_member_required
+def admin_users(request):
+    profiles = Profile.objects.select_related('user').all()
+    return render(request, 'core/admin_users.html', {'profiles': profiles})
+
+@staff_member_required
+def verify_user_admin(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    profile, created = Profile.objects.get_or_create(user=user)
+    profile.verified_status = True
+    profile.save()
+    messages.success(request, f"User {user.username} verified.")
+    return redirect('admin_users')
+
+@staff_member_required
+def admin_loans(request):
+    status = request.GET.get('status')
+    loans = Loan.objects.select_related('borrower').all().order_by('-created_at')
+    
+    if status:
+        loans = loans.filter(status=status)
+        
+    return render(request, 'core/admin_loans.html', {
+        'loans': loans,
+        'current_status': status
+    })

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm mt-5">
+            <div class="card-header bg-danger text-white text-center">
+                <h4 class="mb-0">Register Admin</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Warning:</strong> Creating a superuser/admin account.
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field.errors }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text text-muted">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <script>
+                        var inputs = document.querySelectorAll('input, select, textarea');
+                        inputs.forEach(function(input) {
+                            input.classList.add('form-control');
+                        });
+                    </script>
+                    <button type="submit" class="btn btn-danger w-100">Create Admin Account</button>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'login' %}">Back to Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

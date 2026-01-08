@@ -1,204 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=375px, initial-scale=1.0">
-<title>Rilakin Investments</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-primary: '#3176FF',
-secondary: '#6366F1'
-},
-borderRadius: {
-'none': '0px',
-'sm': '4px',
-DEFAULT: '8px',
-'md': '12px',
-'lg': '16px',
-'xl': '20px',
-'2xl': '24px',
-'3xl': '32px',
-'full': '9999px',
-'button': '8px'
-}
-}
-},
-darkMode: 'class'
-}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-<style>
-:where([class^="ri-"])::before { content: "\f3c2"; }
-body { background-color: #1a1a1a; color: #ffffff; }
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
--webkit-box-shadow: 0 0 0 30px #2d2d2d inset !important;
--webkit-text-fill-color: #ffffff !important;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375px, initial-scale=1.0">
+  <title>Rilakin Investments Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3176FF',
+            secondary: '#6366F1'
+          },
+          borderRadius: {
+            'none': '0px',
+            'sm': '4px',
+            DEFAULT: '8px',
+            'md': '12px',
+            'lg': '16px',
+            'xl': '20px',
+            '2xl': '24px',
+            '3xl': '32px',
+            'full': '9999px',
+            'button': '8px'
+          }
+        }
+      },
+      darkMode: 'class'
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :where([class^="ri-"])::before {
+      content: "\f3c2";
+    }
+
+    body {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px #2d2d2d inset !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
+  </style>
 </head>
+
 <body class="w-[375px] min-h-screen mx-auto bg-gray-900">
-<div class="fixed top-0 w-full bg-gray-900 z-50 border-b border-gray-800">
-<div class="p-4 flex items-center justify-between">
-<h1 class="text-2xl font-['Pacifico'] text-primary">rilakin</h1>
-<div class="w-8 h-8 flex items-center justify-center cursor-pointer" id="menuButton">
-<i class="ri-menu-line text-white ri-xl"></i>
-</div>
-</div>
-</div>
-<div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" onclick="closeMenu()"></div>
-<div id="menuContent" class="fixed top-0 right-0 w-64 bg-gray-800 h-auto rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300 translate-y-[-100%] m-4">
-  <div class="p-4 space-y-3">
-    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
-      <i class="ri-home-line mr-2"></i>Dashboard
-    </a>
-    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
-      <i class="ri-wallet-line mr-2"></i>My Loans
-    </a>
-    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
-      <i class="ri-settings-line mr-2"></i>Settings
-    </a>
-    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
-      <i class="ri-customer-service-line mr-2"></i>Support
-    </a>
-    <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
-      <i class="ri-logout-box-line mr-2"></i>Logout
-    </a>
+  <div class="fixed top-0 w-full bg-gray-900 z-50 border-b border-gray-800">
+    <div class="p-4 flex items-center justify-between">
+      <h1 class="text-2xl font-['Pacifico'] text-primary">rilakin</h1>
+      <div class="w-8 h-8 flex items-center justify-center cursor-pointer" id="menuButton">
+        <i class="ri-menu-line text-white ri-xl"></i>
+      </div>
+    </div>
   </div>
-</div>
-<main class="pt-16 pb-20 px-4">
-<div class="mb-8">
-<h2 class="text-2xl font-semibold mb-2">Quick, Secure Loans at Your Fingertips</h2>
-<p class="text-gray-400">Your financial partner for instant, secure lending solutions.</p>
-</div>
-<div class="flex gap-2 mb-8">
-<div class="flex-1 bg-gray-800 rounded p-4 text-center">
-<div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
-<i class="ri-shield-check-line text-white"></i>
-</div>
-<p class="text-sm text-gray-300">Secure</p>
-</div>
-<div class="flex-1 bg-gray-800 rounded p-4 text-center">
-<div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
-<i class="ri-timer-line text-white"></i>
-</div>
-<p class="text-sm text-gray-300">Quick</p>
-</div>
-<div class="flex-1 bg-gray-800 rounded p-4 text-center">
-<div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
-<i class="ri-bank-line text-white"></i>
-</div>
-<p class="text-sm text-gray-300">Trusted</p>
-</div>
-</div>
-<form id="registrationForm" class="space-y-4">
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">National ID</label>
-<input type="text" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white" placeholder="Enter your ID number" required>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
-<input type="text" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white" placeholder="Enter your full name" required>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-<input type="email" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white" placeholder="Enter your email" required>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
-<div class="relative">
-<input type="password" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white" placeholder="Create password" required>
-<button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
-<i class="ri-eye-line text-gray-400"></i>
-</button>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">Employment Type</label>
-<div class="grid grid-cols-3 gap-2">
-<button type="button" class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">Government</button>
-<button type="button" class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">NGO</button>
-<button type="button" class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">Private</button>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-300 mb-1">Monthly Income (KES)</label>
-<input type="number" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white" placeholder="Enter your monthly income" required>
-</div>
-<div class="pt-4">
-<button type="submit" class="w-full bg-primary text-white p-4 rounded !rounded-button font-medium">Create Account</button>
-</div>
-</form>
-<div class="mt-8 text-center">
-<p class="text-sm text-gray-400">Already have an account? <a href="#" class="text-primary">Sign In</a></p>
-</div>
-</main>
-<div class="fixed bottom-0 w-full bg-gray-900 border-t border-gray-800">
-<div class="grid grid-cols-4 gap-0">
-<a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
-<i class="ri-home-line ri-lg mb-1"></i>
-<span class="text-[10px]">Home</span>
-</a>
-<a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
-<i class="ri-wallet-line ri-lg mb-1"></i>
-<span class="text-[10px]">Loans</span>
-</a>
-<a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
-<i class="ri-history-line ri-lg mb-1"></i>
-<span class="text-[10px]">History</span>
-</a>
-<a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
-<i class="ri-user-line ri-lg mb-1"></i>
-<span class="text-[10px]">Profile</span>
-</a>
-</div>
-</div>
-<script>
-document.getElementById('registrationForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const toast = document.createElement('div');
-  toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded';
-  toast.textContent = 'Account created successfully!';
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-});
-const menuButton = document.getElementById('menuButton');
-const menuOverlay = document.getElementById('menuOverlay');
-const menuContent = document.getElementById('menuContent');
-function toggleMenu() {
-  menuOverlay.classList.toggle('hidden');
-  menuContent.classList.toggle('hidden');
-  if (!menuContent.classList.contains('hidden')) {
-    setTimeout(() => {
-      menuContent.style.transform = 'translateY(0)';
-    }, 10);
-  } else {
-    menuContent.style.transform = 'translateY(-100%)';
-  }
-}
-function closeMenu() {
-  menuContent.style.transform = 'translateY(-100%)';
-  setTimeout(() => {
-    menuOverlay.classList.add('hidden');
-    menuContent.classList.add('hidden');
-  }, 300);
-}
-menuButton.addEventListener('click', toggleMenu);
-document.addEventListener('click', function(event) {
-  const isClickInside = menuContent.contains(event.target) || menuButton.contains(event.target);
-  if (!isClickInside && !menuContent.classList.contains('hidden')) {
-    closeMenu();
-  }
-});
-</script>
+  <div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" onclick="closeMenu()"></div>
+  <div id="menuContent"
+    class="fixed top-0 right-0 w-64 bg-gray-800 h-auto rounded-lg shadow-lg z-50 hidden transform transition-transform duration-300 translate-y-[-100%] m-4">
+    <div class="p-4 space-y-3">
+      <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
+        <i class="ri-home-line mr-2"></i>Dashboard
+      </a>
+      <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
+        <i class="ri-wallet-line mr-2"></i>My Loans
+      </a>
+      <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
+        <i class="ri-settings-line mr-2"></i>Settings
+      </a>
+      <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
+        <i class="ri-customer-service-line mr-2"></i>Support
+      </a>
+      <a href="#" class="block px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">
+        <i class="ri-logout-box-line mr-2"></i>Logout
+      </a>
+    </div>
+  </div>
+  <main class="pt-16 pb-20 px-4">
+    <div class="mb-8">
+      <h2 class="text-2xl font-semibold mb-2">Quick, Secure Loans at Your Fingertips</h2>
+      <p class="text-gray-400">Your financial partner for instant, secure lending solutions.</p>
+    </div>
+    <div class="flex gap-2 mb-8">
+      <div class="flex-1 bg-gray-800 rounded p-4 text-center">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
+          <i class="ri-shield-check-line text-white"></i>
+        </div>
+        <p class="text-sm text-gray-300">Secure</p>
+      </div>
+      <div class="flex-1 bg-gray-800 rounded p-4 text-center">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
+          <i class="ri-timer-line text-white"></i>
+        </div>
+        <p class="text-sm text-gray-300">Quick</p>
+      </div>
+      <div class="flex-1 bg-gray-800 rounded p-4 text-center">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-full bg-primary flex items-center justify-center">
+          <i class="ri-bank-line text-white"></i>
+        </div>
+        <p class="text-sm text-gray-300">Trusted</p>
+      </div>
+    </div>
+    <form id="registrationForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">National ID</label>
+        <input type="text" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white"
+          placeholder="Enter your ID number" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
+        <input type="text" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white"
+          placeholder="Enter your full name" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+        <input type="email" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white"
+          placeholder="Enter your email" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+        <div class="relative">
+          <input type="password" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white"
+            placeholder="Create password" required>
+          <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2">
+            <i class="ri-eye-line text-gray-400"></i>
+          </button>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Employment Type</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button"
+            class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">Government</button>
+          <button type="button"
+            class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">NGO</button>
+          <button type="button"
+            class="p-3 bg-gray-800 rounded !rounded-button text-center text-sm text-gray-300 hover:bg-primary hover:text-white transition-colors">Private</button>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-300 mb-1">Monthly Income (KES)</label>
+        <input type="number" class="w-full bg-gray-800 rounded !rounded-button border-none p-3 text-white"
+          placeholder="Enter your monthly income" required>
+      </div>
+      <div class="pt-4">
+        <button type="submit" class="w-full bg-primary text-white p-4 rounded !rounded-button font-medium">Create
+          Account</button>
+      </div>
+    </form>
+    <div class="mt-8 text-center">
+      <p class="text-sm text-gray-400">Already have an account? <a href="#" class="text-primary">Sign In</a></p>
+    </div>
+  </main>
+  <div class="fixed bottom-0 w-full bg-gray-900 border-t border-gray-800">
+    <div class="grid grid-cols-4 gap-0">
+      <a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
+        <i class="ri-home-line ri-lg mb-1"></i>
+        <span class="text-[10px]">Home</span>
+      </a>
+      <a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
+        <i class="ri-wallet-line ri-lg mb-1"></i>
+        <span class="text-[10px]">Loans</span>
+      </a>
+      <a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
+        <i class="ri-history-line ri-lg mb-1"></i>
+        <span class="text-[10px]">History</span>
+      </a>
+      <a href="#" class="flex flex-col items-center justify-center p-3 text-gray-400 hover:text-primary">
+        <i class="ri-user-line ri-lg mb-1"></i>
+        <span class="text-[10px]">Profile</span>
+      </a>
+    </div>
+  </div>
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded';
+      toast.textContent = 'Account created successfully!';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    });
+    const menuButton = document.getElementById('menuButton');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuContent = document.getElementById('menuContent');
+    function toggleMenu() {
+      menuOverlay.classList.toggle('hidden');
+      menuContent.classList.toggle('hidden');
+      if (!menuContent.classList.contains('hidden')) {
+        setTimeout(() => {
+          menuContent.style.transform = 'translateY(0)';
+        }, 10);
+      } else {
+        menuContent.style.transform = 'translateY(-100%)';
+      }
+    }
+    function closeMenu() {
+      menuContent.style.transform = 'translateY(-100%)';
+      setTimeout(() => {
+        menuOverlay.classList.add('hidden');
+        menuContent.classList.add('hidden');
+      }, 300);
+    }
+    menuButton.addEventListener('click', toggleMenu);
+    document.addEventListener('click', function (event) {
+      const isClickInside = menuContent.contains(event.target) || menuButton.contains(event.target);
+      if (!isClickInside && !menuContent.classList.contains('hidden')) {
+        closeMenu();
+      }
+    });
+  </script>
 </body>
+
 </html>

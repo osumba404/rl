@@ -7,6 +7,8 @@
         <div class="btn-group me-2">
             <a href="{% url 'admin_users' %}" class="btn btn-sm btn-outline-emerald">Manage Users</a>
             <a href="{% url 'admin_loans' %}" class="btn btn-sm btn-outline-emerald">All Loans</a>
+            <a href="{% url 'admin_create_loan' %}" class="btn btn-sm btn-success">Create Loan</a>
+            <a href="{% url 'admin_create_user' %}" class="btn btn-sm btn-primary">Create User</a>
         </div>
         <a href="{% url 'admin:index' %}" class="btn btn-sm btn-outline-secondary">Go to Django Admin</a>
     </div>
@@ -42,7 +44,7 @@
         <div class="card text-white bg-success mb-3">
             <div class="card-body">
                 <h5 class="card-title">Total Repaid</h5>
-                <p class="card-text display-6">${{ total_repaid|floatform:0 }}</p>
+                <p class="card-text display-6">${{ total_repaid|floatformat:0 }}</p>
             </div>
         </div>
     </div>

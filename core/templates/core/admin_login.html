@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h4 class="mb-0">Admin Login</h4>
+                <small>Administrative Access</small>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark">Login to Admin</button>
+                    </div>
+                </form>
+                <hr>
+                <div class="text-center">
+                    <a href="{% url 'admin_register' %}" class="btn btn-outline-primary btn-sm">Create Admin Account</a>
+                    <br><br>
+                    <a href="{% url 'login' %}" class="text-muted">Regular User Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

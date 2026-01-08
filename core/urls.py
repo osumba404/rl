@@ -16,4 +16,6 @@ urlpatterns = [
     path('staff/users/', views.admin_users, name='admin_users'),
     path('staff/users/<int:pk>/verify/', views.verify_user_admin, name='verify_user_admin'),
     path('staff/loans/', views.admin_loans, name='admin_loans'),
+    path('staff/loans/create/', views.admin_create_loan, name='admin_create_loan'),
+    path('staff/users/create/', views.admin_create_user, name='admin_create_user'),
 ]

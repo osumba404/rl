@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import UserRegisterForm, ProfileForm, LoanForm, RepaymentForm
-from .models import Loan, Profile
+from .forms import UserRegisterForm, ProfileForm, LoanForm, RepaymentForm, AdminLoanForm, AdminUserForm
+from .models import Loan, Profile, Repayment
 
 def register(request):
     if request.method == 'POST':
@@ -128,11 +128,45 @@ def repay_loan(request):
         
     return render(request, 'core/repay.html', {'form': form, 'loan': active_loan})
 
+def admin_login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user and user.is_staff:
+            login(request, user)
+            return redirect('admin_dashboard')
+        else:
+            messages.error(request, 'Invalid credentials or insufficient permissions')
+    
+    return render(request, 'core/admin_login.html')
+
+def admin_register_view(request):
+    if request.method == 'POST':
+        form = AdminUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+            Profile.objects.create(user=user, verified_status=True)
+            messages.success(request, f'Admin account created for {user.username}!')
+            return redirect('admin_login')
+    else:
+        form = AdminUserForm()
+    return render(request, 'core/admin_register.html', {'form': form})
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Count
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 @staff_member_required
 def admin_dashboard(request):
+    # Debug: Print to verify this view is being called
+    print(f"Admin dashboard accessed by: {request.user.username}")
+    
     # Stats
     total_users = Profile.objects.count()
     active_loans_count = Loan.objects.filter(status='Active').count()
@@ -197,3 +231,32 @@ def admin_loans(request):
         'loans': loans,
         'current_status': status
     })
+
+@staff_member_required
+def admin_create_loan(request):
+    if request.method == 'POST':
+        form = AdminLoanForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Loan created successfully!')
+            return redirect('admin_loans')
+    else:
+        form = AdminLoanForm()
+    return render(request, 'core/admin_create_loan.html', {'form': form})
+
+@staff_member_required
+def admin_create_user(request):
+    if request.method == 'POST':
+        form = AdminUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            if form.cleaned_data['is_staff']:
+                user.is_staff = True
+                user.is_superuser = True
+            user.save()
+            Profile.objects.create(user=user, verified_status=True)
+            messages.success(request, f'User {user.username} created successfully!')
+            return redirect('admin_users')
+    else:
+        form = AdminUserForm()
+    return render(request, 'core/admin_create_user.html', {'form': form})
